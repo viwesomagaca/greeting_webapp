@@ -1,0 +1,30 @@
+{
+  "name": "greeting_webform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viwesomagaca/greeting_webform.git"
+  },
+  "author": "viwe somagaca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viwesomagaca/greeting_webform/issues"
+  },
+  "homepage": "https://github.com/viwesomagaca/greeting_webform#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-session": "^1.15.5",
+    "mongoose": "^4.11.5",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

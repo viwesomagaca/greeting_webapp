@@ -1,0 +1,35 @@
+body{
+    background-color:beige;
+    background-image: url("greeting.jpg");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+}
+
+.container{
+    background-color: white;
+    width : 80%;
+    margin : auto;
+    padding : 1em;
+    font-family: "cursive";
+    position: relative;
+    bottom:-6em;
+
+}
+
+.error{
+    color: red;
+    background-color: lightgrey;
+    width : 40%;
+    margin : auto;
+    padding : 1em;
+}
+
+h4{
+    background-color: blue;
+}
+
+li{
+    list-style: none;
+    font-size: 18px;
+}
