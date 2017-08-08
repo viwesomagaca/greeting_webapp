@@ -19,6 +19,10 @@ app.set('view engine', 'handlebars');
 app.use(session({secret:'keyboard cat', cookie: { maxAge: 60000 *30 }}));
 app.use(flash());
 
+app.get("/", function(req,res){
+   res.send("Greeting Web Form");
+});
+
 app.get("/greetings" ,greetingRoutes.add);
 app.get("/greetings/add",greetingRoutes.index);
 app.post("/greetings/add" ,greetingRoutes.index);
