@@ -6,13 +6,9 @@ module.exports = function(){
         res.render('greetings', {names:namesGreeted});
     };
 
-    // const addScreen = function(req, res) {
-    //     res.render('greetings/add');
-    // }
 
     const add = function(req, res){
-    //    res.send("Enter your Name")
-    //    var names = req.params.names;
+
        var names = req.body.names;
        var language= req.body.language;
        var greets = "";
@@ -55,6 +51,5 @@ module.exports = function(){
     return{
       index,
         add,
-        // addScreen
     }
 }

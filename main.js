@@ -23,22 +23,11 @@ app.get("/", function(req,res){
    res.send("Greeting Web Form");
 });
 
-// app.get("/greetings/index" , greetingRoutes.index);
-// app.post("/greetings/index" ,greetingRoutes.index);
-
-// app.post("/greetings" , greetingRoutes.redirection);
 app.get("/greetings" ,greetingRoutes.add);
 app.get("/greetings/add",greetingRoutes.index);
 app.post("/greetings/add" ,greetingRoutes.index);
 app.post("/greetings" , greetingRoutes.add);
 
-// parse application/x-www-form-urlencoded
 
-// parse application/json
-
-
-const port = process.env.PORT||3003;
-
-app.listen(port, function(){
-    console.log("Greeting webform started on port:" + port);
-})
+let portNumber = process.env.PORT || 3003;
+app.listen(portNumber);
