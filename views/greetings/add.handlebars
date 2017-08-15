@@ -3,8 +3,8 @@
 </head>
 
 <h1 align="center"> Greet Me </h1>
-<form align="center" class="" action="/greetings" method="post">
-<label class="labels"> Name :
+<form align="center" class="" action="/greetings/add" method="post">
+    <label class="labels"> Name :
 <input type="text" name="names" placeholder="Type your name">
 <input type="submit" name="" value="Greet me!">
 <br>
@@ -17,8 +17,10 @@
 
 <p>{{language}} </p>
 
+<p> {{namesCounter}} </p>
+
 <div class="error">
     {{messages.error}}
 
 </div>
-<a href ="/greetings/add">names greeted </a>
+<a href ="/greetings/namesgreeted">names greeted </a>

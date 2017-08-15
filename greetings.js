@@ -1,55 +1,108 @@
-module.exports = function(){
+module.exports = function(models) {
 
-     const namesGreeted =[];
+    var NameModel = models.Name
 
-    const index = function(req, res){
-        res.render('greetings', {names:namesGreeted});
+    const namesGreeted = [];
+
+    const index = function(req, res) {
+        res.render('greetings/add', {
+            names: namesGreeted
+        });
     };
 
+    const greeted = function(req, res, done) {
+        models.Name.find({}, function(err, allNames) {
+            if (err) {
+                return done(err)
+            }
 
-    const add = function(req, res){
+            var namesG = {
+                names: allNames
+            }
 
-       var names = req.body.names;
-       var language= req.body.language;
-       var greets = "";
+            res.render('greetings/namesgreeted', namesG)
 
-       if(language === "English"){
-       greets =  "Hello, " + names;
-        }
+        })
 
-        if(language === "Isixhosa"){
-       greets = "Molo, " + names;
-        }
-
-         if(language === "Afrikaans"){
-       greets = "Hallo, " + names;
-        }
-
-        var sameName = namesGreeted.find(function(currentName){
-             return currentName === names;
-         })
-
-         if(!names){
-             req.flash('error','field should not be blank!');
-         }else
-           if(names && !sameName){
-               namesGreeted.push(names);
-           }
-           else{
-             req.flash('error', 'name has already been greeted!');
-         }
-       if(language === undefined){
-           req.flash('error','Please select a Language');
-       }
-         console.log(greets);
-         console.log(language);
-
-
-        res.render("greetings/add",{language : greets} );
     }
 
-    return{
-      index,
+
+    const add = function(req, res, done) {
+        var name = req.body.names;
+        var language = req.body.language;
+
+        var data = {
+            name: req.body.names
+        }
+
+        if (!data || !data.name) {
+            req.flash('error', 'Please select name.');
+            res.render('add');
+        }
+
+        if (data || data.names !== undefined) {
+
+            models.Name.findOne({
+                name: req.body.names
+            }, function(err, result) {
+                if (err) {
+                    return done(err)
+                }
+
+                // if (result === null) {
+                models.Name.create({
+                    dbnames: req.body.names
+                }, function(err, name) {
+                    if (err) {
+                        return done(err)
+                    }
+                    var newName = name.dbnames;
+
+
+                    models.Name.findOne({
+                        dbnames: req.body.names
+                    }, function(err, result) {
+                        if (err) {
+                            return done(err)
+                        }
+                        var grt = '';
+
+                        if (language == 'Afrikaans') {
+                            grt = 'Halo, ' + result.dbnames;
+
+                        }
+                        if (language == 'English') {
+                            grt = 'Hello, ' + result.dbnames;
+
+                        }
+                        if (language == 'Isixhosa') {
+                            grt = 'Molo, ' + result.dbnames;
+
+                        }
+
+
+
+                        res.render('greetings/add', {
+                            language: grt
+                        })
+
+                    })
+                })
+
+                // res.render('greetings/add')
+
+                // }
+
+            })
+
+        }
+    }
+
+
+
+    return {
+        index,
         add,
+        greeted
     }
 }

@@ -3,11 +3,12 @@
 </head>
 <h1> Names Greeted </h1>
 
+
+
 <ul>
 {{#each names}}
- <li><a href ="/greetings/add/counter">{{this}}</a></li>
+ <li><a href ="/greetings/namesgreeted/counter">{{this.dbnames}}</a></li>
 {{/each}}
 </ul>
 
-
-<a href ="/greetings">home page </a>
+<a href ="/greetings/add">home page </a>
