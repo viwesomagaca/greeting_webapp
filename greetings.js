@@ -10,6 +10,7 @@ module.exports = function(models) {
         });
     };
 
+
     const greeted = function(req, res, done) {
         models.Name.find({}, function(err, allNames) {
             if (err) {
@@ -28,81 +29,145 @@ module.exports = function(models) {
 
 
     const add = function(req, res, done) {
-        var name = req.body.names;
+        //var name = req.body.names;
+        var grt = '';
+        var dbnames = req.body.names;
         var language = req.body.language;
-
-        var data = {
-            name: req.body.names
+        var firstLetter = req.body.names.substring(0,1);
+        var caps = req.body.names.substring(0,1).toUpperCase();
+        var users = {
+            dbnames: req.body.names.replace(firstLetter,caps)
         }
 
-        if (!data || !data.name) {
+        if (!users || !users.dbnames) {
             req.flash('error', 'Please select name.');
-            res.render('add');
+           res.render('greetings/add');
         }
 
-        if (data || data.names !== undefined) {
+        else {
 
-            models.Name.findOne({
-                name: req.body.names
-            }, function(err, result) {
-                if (err) {
-                    return done(err)
+            models.Name.findOne({dbnames:req.body.names.replace(firstLetter,caps)}, function(err, foundName) {
+                if (err){
+                    return done(err);
                 }
 
-                // if (result === null) {
-                models.Name.create({
-                    dbnames: req.body.names
-                }, function(err, name) {
-                    if (err) {
-                        return done(err)
+                if (foundName) {
+
+                    foundName.NamesGreetedCounter = foundName.NamesGreetedCounter + 1;
+
+
+                    if (language == 'Afrikaans') {
+                        grt = 'Halo, ' + foundName.dbnames;
+
                     }
-                    var newName = name.dbnames;
+                    if (language == 'English') {
+                        grt = 'Hello, ' + foundName.dbnames;
 
+                    }
+                    if (language == 'Isixhosa') {
+                        grt = 'Molo, ' + foundName.dbnames;
+                    }
 
-                    models.Name.findOne({
-                        dbnames: req.body.names
-                    }, function(err, result) {
+                    foundName.save(function(err, name) {
                         if (err) {
-                            return done(err)
-                        }
-                        var grt = '';
-
-                        if (language == 'Afrikaans') {
-                            grt = 'Halo, ' + result.dbnames;
+                            return done(err);
 
                         }
-                        if (language == 'English') {
-                            grt = 'Hello, ' + result.dbnames;
+                    })
 
-                        }
-                        if (language == 'Isixhosa') {
-                            grt = 'Molo, ' + result.dbnames;
-
+                    models.Name.find({}, function(err, greetedCounter) {
+                        if (err) {
+                            return done(err);
                         }
 
+                        var message = "";
 
+                        message = greetedCounter.length + " names has been greeted for this Session."
 
                         res.render('greetings/add', {
-                            language: grt
+                            language: grt,
+                            message: message
                         })
-
                     })
-                })
+                }
 
-                // res.render('greetings/add')
+                if (foundName === null) {
+                    models.Name.create({
+                        dbnames:req.body.names.replace(firstLetter,caps),
+                        NamesGreetedCounter: 1
+                    }, function(err, name) {
+                        if (err) {
+                            return done(err);
+                        }
 
-                // }
+
+                        models.Name.findOne({
+                            dbnames:req.body.names.replace(firstLetter,caps)
+                        }, function(err, foundName) {
+                            if (err) {
+                                return done(err)
+                            }
+                            var grt = '';
+
+                            if (language == 'Afrikaans') {
+                                grt = 'Halo, ' + foundName.dbnames;
+                            }
+                            if (language == 'English') {
+                                grt = 'Hello, ' + foundName.dbnames;
+                            }
+                            if (language == 'Isixhosa') {
+                                grt = 'Molo, ' + foundName.dbnames;
+                            }
+
+
+                            models.Name.find({}, function(err, greetedCounter) {
+                                if (err) {
+                                    return done(err)
+                                }
+                                var message = "";
+
+                                message = greetedCounter.length + " Names has been greeted for ths Session."
+
+                                res.render('greetings/add', {
+                                    language: grt,
+                                    message: message
+                                })
+                            })
+
+                        })
+                    })
+                }
 
             })
 
         }
     }
 
+    const counter = function(req, res, done) {
+        var user = req.params.user_id;
+
+        models.Name.findOne({
+            _id: user
+        }, function(err, count) {
+            if (err) {
+                return done(err);
+            }
+
+            if (count) {
+                var uniqueCounter = count.dbnames + " has been greeted " + count.NamesGreetedCounter + " time(s). "
+            }
+            res.render('greetings/counter', {
+                uniqueCounter: uniqueCounter
+            })
+        })
+
+    }
 
 
     return {
         index,
         add,
-        greeted
+        greeted,
+        counter
     }
 }

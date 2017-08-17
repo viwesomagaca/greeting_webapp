@@ -33,13 +33,13 @@ app.use(session({
 }));
 app.use(flash());
 
-function storeNames(name, cb){
-    var saveNamesGreeted = new Models.Name({
-        dbnames: names,
-        counter: 1
-    })
-    saveNamesGreeted.save(cb)
-}
+// function storeNames(name, cb){
+//     var saveNamesGreeted = new Models.Name({
+//         dbnames: names,
+//         counter: 1
+//     })
+//     saveNamesGreeted.save(cb)
+// }
 
 app.get("/", function(req,res){
    res.send("Greeting Web Form");
@@ -50,10 +50,13 @@ app.get("/greetings" ,greetingRoutes.add);
 app.get("/greetings/add",greetingRoutes.index);
 
 app.get("/greetings/namesgreeted",greetingRoutes.greeted);
+//app.post("/greetings/namesgreeted",greetingRoutes.greeted);
 
 
-// app.get("/greetings/add/counter", greetingRoutes.counter);
-// app.post("/greetings/add/counter", greetingRoutes.counter);
+
+app.get("/greetings/counter/:user_id", greetingRoutes.counter);
+// app.post("/greetings/counter/:user_id", greetingRoutes.counter);
+
 app.post("/greetings/add" ,greetingRoutes.add);
 app.post("/greetings" , greetingRoutes.add);
 

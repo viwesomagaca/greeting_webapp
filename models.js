@@ -4,9 +4,9 @@ module.exports = function(mongoUrl) {
     mongoose.connect(mongoUrl);
 
     const Name = mongoose.model('Name', {
-        dbnames: String
-        //counter : Number
-    });
+        dbnames: String,
+        NamesGreetedCounter: Number
+    })
 
     return {
         Name
