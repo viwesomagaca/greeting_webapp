@@ -16,6 +16,20 @@ body{
     bottom:-6em;
 
 }
+.PageLinks{
+    font-weight: bolder;
+
+}
+
+.message{
+    color: darkblue;
+    background-color: lavender;
+    font-family: cursive;
+    font-style: italic;
+    width : 40%;
+    margin : auto;
+    padding : 1em;
+}
 
 .error{
     color: red;

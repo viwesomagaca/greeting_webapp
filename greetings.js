@@ -40,10 +40,12 @@ module.exports = function(models) {
         }
 
         if (!users || !users.dbnames) {
-            req.flash('error', 'Please select name.');
+            req.flash('error', 'Please type in your name.');
            res.render('greetings/add');
-        }
-
+       }else if(users && !language){
+           req.flash('error','Please select a Langauage');
+           res.render('greetings/add');
+       }
         else {
 
             models.Name.findOne({dbnames:req.body.names.replace(firstLetter,caps)}, function(err, foundName) {
@@ -82,7 +84,7 @@ module.exports = function(models) {
 
                         var message = "";
 
-                        message = greetedCounter.length + " names has been greeted for this Session."
+                        message = greetedCounter.length + " name(s) have been greeted for this Session."
 
                         res.render('greetings/add', {
                             language: grt,

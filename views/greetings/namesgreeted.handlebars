@@ -1,14 +1,15 @@
 <head>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<h1> Names Greeted </h1>
-
-
+<h1 align="center"> Names Greeted </h1>
+<div  align="center">
 
 <ul>
-{{#each names}}
- <li><a href ="/greetings/counter/{{this._id}}">{{this.dbnames}}</a></li>
-{{/each}}
+    {{#each names}}
+        <li><a href="/greetings/counter/{{this._id}}">{{this.dbnames}}</a></li>
+    {{/each}}
 </ul>
 
-<a href ="/greetings/add">home page </a>
+<a href="/greetings/add" class="PageLinks">GO BACK Home! </a>
+
+</div>
