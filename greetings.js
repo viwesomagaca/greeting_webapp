@@ -165,11 +165,22 @@ module.exports = function(models) {
 
     }
 
+    const clearButton = function(req, res, next){
+        var clear = req.body.clearButton
+        models.Name.remove({}, function(err){
+            if(err){
+                return next(err);
+            }
+            res.render('greetings/add')
+        })
+    }
+
 
     return {
         index,
         add,
         greeted,
-        counter
+        counter,
+        clearButton
     }
 }

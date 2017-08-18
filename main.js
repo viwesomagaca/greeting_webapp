@@ -50,7 +50,9 @@ app.get("/greetings" ,greetingRoutes.add);
 app.get("/greetings/add",greetingRoutes.index);
 
 app.get("/greetings/namesgreeted",greetingRoutes.greeted);
-//app.post("/greetings/namesgreeted",greetingRoutes.greeted);
+
+app.get("/greetings/clear",greetingRoutes.clearButton);
+app.post("/greetings/clear",greetingRoutes.clearButton);
 
 
 
