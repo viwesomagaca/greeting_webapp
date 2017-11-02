@@ -29,14 +29,11 @@ module.exports = function(models) {
 
 
     const add = function(req, res, done) {
-        //var name = req.body.names;
         var grt = '';
         var dbnames = req.body.names;
         var language = req.body.language;
-        var firstLetter = req.body.names.substring(0,1);
-        var caps = req.body.names.substring(0,1).toUpperCase();
         var users = {
-            dbnames: req.body.names.replace(firstLetter,caps)
+            dbnames: req.body.names
         }
 
         if (!users || !users.dbnames) {
@@ -48,7 +45,7 @@ module.exports = function(models) {
        }
         else {
 
-            models.Name.findOne({dbnames:req.body.names.replace(firstLetter,caps)}, function(err, foundName) {
+            models.Name.findOne({dbnames:req.body.names}, function(err, foundName) {
                 if (err){
                     return done(err);
                 }
@@ -95,7 +92,7 @@ module.exports = function(models) {
 
                 if (foundName === null) {
                     models.Name.create({
-                        dbnames:req.body.names.replace(firstLetter,caps),
+                        dbnames:req.body.names,
                         NamesGreetedCounter: 1
                     }, function(err, name) {
                         if (err) {
@@ -104,7 +101,7 @@ module.exports = function(models) {
 
 
                         models.Name.findOne({
-                            dbnames:req.body.names.replace(firstLetter,caps)
+                            dbnames:req.body.names
                         }, function(err, foundName) {
                             if (err) {
                                 return done(err)

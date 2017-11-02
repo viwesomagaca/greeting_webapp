@@ -33,16 +33,8 @@ app.use(session({
 }));
 app.use(flash());
 
-// function storeNames(name, cb){
-//     var saveNamesGreeted = new Models.Name({
-//         dbnames: names,
-//         counter: 1
-//     })
-//     saveNamesGreeted.save(cb)
-// }
-
 app.get("/", function(req,res){
-   res.send("Greeting Web Form");
+   res.redirect("/greetings");
 });
 
 
@@ -63,7 +55,7 @@ app.post("/greetings/add" ,greetingRoutes.add);
 app.post("/greetings" , greetingRoutes.add);
 
 
-let portNumber = process.env.PORT || 3003;
+let portNumber = process.env.PORT || 3007;
 app.listen(portNumber, function(){
     console.log('Web application started on port ' + portNumber);
 });
